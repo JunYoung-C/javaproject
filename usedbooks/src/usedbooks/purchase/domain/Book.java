@@ -6,18 +6,18 @@ import java.time.LocalDateTime;
 public class Book {
   private Long bookId;
   private Long MemberId;
-  private String name;
+  private String bookName;
   private String author;
   private Date publicationDate;
   private int price;
   private String quality;
 
-  public Book(Long bookId, Long memberId, String name, String author, Date publicationDate,
+  public Book(Long bookId, Long memberId, String bookName, String author, Date publicationDate,
       int price, String quality) {
     super();
     this.bookId = bookId;
     MemberId = memberId;
-    this.name = name;
+    this.bookName = bookName;
     this.author = author;
     this.publicationDate = publicationDate;
     this.price = price;
@@ -32,8 +32,8 @@ public class Book {
     return MemberId;
   }
 
-  public String getName() {
-    return name;
+  public String getBookName() {
+    return bookName;
   }
 
   public String getAuthor() {
