@@ -103,6 +103,13 @@ public class BookInfoView extends JFrame implements ActionListener {
       booksTableModel.addRow(getStringData(book));
     }
   }
+  
+  private void writeBooksByName(String name) {
+    booksTableModel.setRowCount(0);
+    for (Book book : bookRepository.findAllByName(name)) {
+      booksTableModel.addRow(getStringData(book));
+    }
+  }
 
   private Vector<String> getStringData(Book book) {
     Vector<String> data = new Vector<String>();
@@ -124,10 +131,7 @@ public class BookInfoView extends JFrame implements ActionListener {
     if (ob == searchButton) {
       String name = searchTextField.getText();
       searchTextField.setText("");
-      booksTableModel.setRowCount(0);
-      for (Book book : bookRepository.findAllByName(name)) {
-        booksTableModel.addRow(getStringData(book));
-      }
+      writeBooksByName(name);
     } else if (ob == selectButton) {
       if (booksTable.getSelectedRow() == -1) {
         JOptionPane.showMessageDialog(this, "테이블을 선택해 주세요!");
