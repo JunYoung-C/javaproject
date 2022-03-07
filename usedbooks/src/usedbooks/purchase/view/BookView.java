@@ -2,14 +2,21 @@ package usedbooks.purchase.view;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import usedbooks.purchase.domain.Book;
+import usedbooks.purchase.repository.BookRepository;
 
 public class BookView extends JFrame {
+  private final BookRepository bookRepository = new BookRepository();
+
   Container cp;
   JLabel titleLabel, searchLabel;
   JTable booksTable;
@@ -22,7 +29,7 @@ public class BookView extends JFrame {
     cp = this.getContentPane();
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setBounds(800, 100, 700, 500);
+    this.setBounds(100, 100, 700, 700);
     cp.setBackground(new Color(100, 100, 100));
 
     initDesign();
@@ -38,20 +45,49 @@ public class BookView extends JFrame {
     this.add(titleLabel);
 
     // 검색 관련
-    searchLabel = new JLabel("책 검색");
+    setSearchArea();
+
+    // 책 테이블 관련
+    setBookTableArea();
+
+    // 책선택, 돌아가기 버튼
+    setSelectAndReturnButton();
+  }
+
+  private void setSelectAndReturnButton() {
+    selectButton = new JButton("검색");
+    returnButton = new JButton("돌아가기");
+
+    selectButton.setBounds(150, 600, 100, 40);
+    returnButton.setBounds(300, 600, 100, 40);
+
+    this.add(selectButton);
+    this.add(returnButton);
+  }
+
+  private void setBookTableArea() {
+    String[] bookFieldnames = {"번호", "책 이름", "지은이", "출판 날짜", "판매가", "상품 상태"};
+    booksTableModel = new DefaultTableModel(bookFieldnames, 0);
+    booksTable = new JTable(booksTableModel);
+    JScrollPane booksScrollpane = new JScrollPane(booksTable);
+    booksScrollpane.setBounds(50, 150, 500, 400);
+    this.add(booksScrollpane);
+  }
+
+  private void setSearchArea() {
+    searchLabel = new JLabel("책 이름");
     searchTextField = new JTextField();
     searchButton = new JButton("확인");
 
     searchLabel.setBounds(50, 100, 60, 40);
     searchTextField.setBounds(160, 100, 300, 40);
     searchButton.setBounds(500, 100, 60, 40);
-    
+
     this.add(searchLabel);
     this.add(searchTextField);
     this.add(searchButton);
-
-    
   }
+
 
   public static void main(String[] args) {
     new BookView("책 구매하기");

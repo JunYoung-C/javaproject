@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Vector;
-import javax.crypto.spec.RC2ParameterSpec;
 import usedbooks.purchase.domain.Book;
 
 public class BookRepository {
