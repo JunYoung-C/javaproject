@@ -2,6 +2,8 @@ package usedbooks.purchase.view;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -53,6 +55,7 @@ public class BookView extends JFrame {
     // 책선택, 돌아가기 버튼
     setSelectAndReturnButton();
 
+    booksTableModel.setRowCount(0);
     for (Book book : bookRepository.findAll()) {
       booksTableModel.addRow(getStringData(book));
     }
@@ -90,6 +93,19 @@ public class BookView extends JFrame {
     this.add(searchLabel);
     this.add(searchTextField);
     this.add(searchButton);
+    
+    searchButton.addActionListener(new ActionListener() {
+      
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        String name = searchTextField.getText();
+        searchTextField.setText("");
+        booksTableModel.setRowCount(0);
+        for (Book book : bookRepository.findByName(name)) {
+          booksTableModel.addRow(getStringData(book));
+        }
+      }
+    });
   }
 
   private Vector<String> getStringData(Book book) {
