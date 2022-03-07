@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import usedbooks.purchase.domain.Book;
 import usedbooks.purchase.repository.BookRepository;
 
-public class BookView extends JFrame {
+public class BookInfoView extends JFrame {
   private final BookRepository bookRepository = new BookRepository();
 
   Container cp;
@@ -26,7 +26,7 @@ public class BookView extends JFrame {
   JTextField searchTextField;
   JButton searchButton, selectButton, returnButton;
 
-  public BookView(String title) {
+  public BookInfoView(String title) {
     super(title);
     cp = this.getContentPane();
 
@@ -62,7 +62,7 @@ public class BookView extends JFrame {
   }
 
   private void setSelectAndReturnButton() {
-    selectButton = new JButton("검색");
+    selectButton = new JButton("선택");
     returnButton = new JButton("돌아가기");
 
     selectButton.setBounds(150, 600, 100, 40);
@@ -70,6 +70,15 @@ public class BookView extends JFrame {
 
     this.add(selectButton);
     this.add(returnButton);
+    
+    selectButton.addActionListener(null);
+    returnButton.addActionListener(new ActionListener() {
+      
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        setVisible(false);
+      }
+    });
   }
 
   private void setBookTableArea() {
@@ -122,6 +131,6 @@ public class BookView extends JFrame {
   }
 
   public static void main(String[] args) {
-    new BookView("책 구매하기");
+    new BookInfoView("책 구매하기");
   }
 }
