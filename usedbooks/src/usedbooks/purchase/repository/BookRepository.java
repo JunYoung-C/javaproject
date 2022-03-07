@@ -1,14 +1,47 @@
 package usedbooks.purchase.repository;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Vector;
 import usedbooks.purchase.domain.Book;
-import usedbooks.purchase.domain.Member;
 
 public class BookRepository {
+  DbConnect dbConnect = new DbConnect();
+
   // 전체 검색
   public List<Book> findAll() {
-    
+    Connection conn = dbConnect.getOracle();
+    Statement stmt = null;
+    ResultSet rs = null;
+
+    List<Book> books = new Vector<Book>();
+
+    try {
+      stmt = conn.createStatement();
+      rs = stmt.executeQuery(Sqls.FIND_ALL_BOOK);
+
+      while (rs.next()) {
+        Long bookId = rs.getLong("book_id");
+        Long MemberId = rs.getLong("member_id");
+        String name = rs.getString("book_name");
+        String author = rs.getString("author");
+        Date publicationDate = rs.getDate("publication_date");
+        int price = rs.getInt("price");
+        String quality = rs.getString("quality");
+
+        books.add(new Book(bookId, MemberId, name, author, publicationDate, price, quality));
+      }
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    return books;
   }
-  
+
   // 이름으로 검색
 }
