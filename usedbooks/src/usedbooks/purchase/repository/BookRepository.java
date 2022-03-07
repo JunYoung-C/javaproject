@@ -112,4 +112,23 @@ public class BookRepository {
 
     return book;
   }
+
+  public void deleteById(long bookId) {
+    Connection conn = dbConnect.getOracle();
+    PreparedStatement ps = null;
+
+    try {
+      ps = conn.prepareStatement(Sqls.DELETE_BOOK_BY_ID);
+      ps.setLong(1, bookId);
+
+      ps.execute();
+
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } finally {
+      dbConnect.dbClose(ps, conn);
+    }
+
+  }
 }
