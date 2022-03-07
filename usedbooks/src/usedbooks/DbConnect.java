@@ -18,7 +18,7 @@ public class DbConnect {
 		Connection conn=null;
 		
 		try {
-			conn=DriverManager.getConnection(ORACLE_LOCAL, "angel", "a1234");
+			conn=DriverManager.getConnection(ORACLE_LOCAL, "usedbooks", "1234");
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
