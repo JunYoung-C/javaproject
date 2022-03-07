@@ -9,6 +9,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -18,10 +19,10 @@ import usedbooks.purchase.domain.Member;
 import usedbooks.purchase.repository.BookRepository;
 import usedbooks.purchase.repository.MemberRepository;
 
-public class BookInfoView extends JFrame {
+public class BookInfoView extends JFrame implements ActionListener {
   private final BookRepository bookRepository = new BookRepository();
   private final MemberRepository memberRepository = new MemberRepository();
-  PurchaseView perchaseview = new PurchaseView("책 구매하기");
+  PurchaseView perchaseview = new PurchaseView("책 구매하기", this);
 
   Container cp;
   JLabel titleLabel, searchLabel;
@@ -50,59 +51,11 @@ public class BookInfoView extends JFrame {
     titleLabel.setBounds(250, 30, 200, 50);
     this.add(titleLabel);
 
-    // 검색 관련
     setSearchArea();
-
-    // 책 테이블 관련
     setBookTableArea();
-
-    // 책선택, 돌아가기 버튼
     setSelectAndReturnButton();
 
-    booksTableModel.setRowCount(0);
-    for (Book book : bookRepository.findAll()) {
-      booksTableModel.addRow(getStringData(book));
-    }
-  }
-
-  private void setSelectAndReturnButton() {
-    selectButton = new JButton("선택");
-    returnButton = new JButton("돌아가기");
-
-    selectButton.setBounds(150, 600, 100, 40);
-    returnButton.setBounds(300, 600, 100, 40);
-
-    this.add(selectButton);
-    this.add(returnButton);
-
-    selectButton.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        Long selectedBookId = Long.parseLong(booksTableModel.getValueAt(booksTable.getSelectedRow(), 0).toString());
-        Long selectedMemberId = bookRepository.findById(selectedBookId).getMemberId();
-        Member selectedMember =memberRepository.findById(selectedMemberId); 
-        
-        perchaseview.changeSellerInfo(selectedMember.getName(), selectedMember.getPhoneNumber());
-        perchaseview.setVisible(true);
-      }
-    });
-    returnButton.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        setVisible(false);
-      }
-    });
-  }
-
-  private void setBookTableArea() {
-    String[] bookFieldnames = {"번호", "책 이름", "지은이", "출판 날짜", "판매가", "상품 상태"};
-    booksTableModel = new DefaultTableModel(bookFieldnames, 0);
-    booksTable = new JTable(booksTableModel);
-    JScrollPane booksScrollpane = new JScrollPane(booksTable);
-    booksScrollpane.setBounds(50, 150, 500, 400);
-    this.add(booksScrollpane);
+    writeAllBook();
   }
 
   private void setSearchArea() {
@@ -118,18 +71,37 @@ public class BookInfoView extends JFrame {
     this.add(searchTextField);
     this.add(searchButton);
 
-    searchButton.addActionListener(new ActionListener() {
+    searchButton.addActionListener(this);
+  }
 
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        String name = searchTextField.getText();
-        searchTextField.setText("");
-        booksTableModel.setRowCount(0);
-        for (Book book : bookRepository.findAllByName(name)) {
-          booksTableModel.addRow(getStringData(book));
-        }
-      }
-    });
+  private void setBookTableArea() {
+    String[] bookFieldnames = {"번호", "책 이름", "지은이", "출판 날짜", "판매가", "상품 상태"};
+    booksTableModel = new DefaultTableModel(bookFieldnames, 0);
+    booksTable = new JTable(booksTableModel);
+    JScrollPane booksScrollpane = new JScrollPane(booksTable);
+    booksScrollpane.setBounds(50, 150, 500, 400);
+    this.add(booksScrollpane);
+  }
+
+  private void setSelectAndReturnButton() {
+    selectButton = new JButton("선택");
+    returnButton = new JButton("돌아가기");
+
+    selectButton.setBounds(150, 600, 100, 40);
+    returnButton.setBounds(300, 600, 100, 40);
+
+    this.add(selectButton);
+    this.add(returnButton);
+
+    selectButton.addActionListener(this);
+    returnButton.addActionListener(this);
+  }
+
+  public void writeAllBook() {
+    booksTableModel.setRowCount(0);
+    for (Book book : bookRepository.findAll()) {
+      booksTableModel.addRow(getStringData(book));
+    }
   }
 
   private Vector<String> getStringData(Book book) {
@@ -145,7 +117,38 @@ public class BookInfoView extends JFrame {
     return data;
   }
 
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    Object ob = e.getSource();
+
+    if (ob == searchButton) {
+      String name = searchTextField.getText();
+      searchTextField.setText("");
+      booksTableModel.setRowCount(0);
+      for (Book book : bookRepository.findAllByName(name)) {
+        booksTableModel.addRow(getStringData(book));
+      }
+    } else if (ob == selectButton) {
+      if (booksTable.getSelectedRow() == -1) {
+        JOptionPane.showMessageDialog(this, "테이블을 선택해 주세요!");
+        return;
+      }
+      Long selectedBookId =
+          Long.parseLong(booksTableModel.getValueAt(booksTable.getSelectedRow(), 0).toString());
+      Long selectedMemberId = bookRepository.findById(selectedBookId).getMemberId();
+      Member selectedMember = memberRepository.findById(selectedMemberId);
+
+      perchaseview.changeSellerInfo(selectedBookId, selectedMember.getName(),
+          selectedMember.getPhoneNumber());
+      perchaseview.setVisible(true);
+    } else if (ob == returnButton) {
+      setVisible(false);
+    }
+  }
+
   public static void main(String[] args) {
     new BookInfoView("책 정보");
   }
+
+
 }
