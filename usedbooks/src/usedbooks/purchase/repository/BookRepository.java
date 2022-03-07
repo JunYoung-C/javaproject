@@ -11,7 +11,7 @@ import java.util.Vector;
 import usedbooks.purchase.domain.Book;
 
 public class BookRepository {
-  DbConnect dbConnect = new DbConnect();
+  private final DbConnect dbConnect = new DbConnect();
 
   // 전체 검색
   public List<Book> findAll() {
@@ -87,7 +87,7 @@ public class BookRepository {
     Book book = null;
 
     try {
-      ps = conn.prepareStatement(Sqls.FIND_BY_ID);
+      ps = conn.prepareStatement(Sqls.FIND_BOOK_BY_ID);
       ps.setLong(1, bookId);
       rs = ps.executeQuery();
 
@@ -99,7 +99,7 @@ public class BookRepository {
         Date publicationDate = rs.getDate("publication_date");
         int price = rs.getInt("price");
         String quality = rs.getString("quality");
-        
+
         book = new Book(bookId, MemberId, name, author, publicationDate, price, quality);
       }
 
