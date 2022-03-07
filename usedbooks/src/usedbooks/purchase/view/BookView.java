@@ -15,8 +15,8 @@ public class BookView extends JFrame {
   JTable booksTable;
   DefaultTableModel booksTableModel;
   JTextField searchTextField;
-  JButton selectButton, returnButton;
-  
+  JButton searchButton, selectButton, returnButton;
+
   public BookView(String title) {
     super(title);
     cp = this.getContentPane();
@@ -29,11 +29,27 @@ public class BookView extends JFrame {
 
     this.setVisible(true);
   }
-  
+
   private void initDesign() {
     this.setLayout(null);
-    
+
     titleLabel = new JLabel("중고책 온라인 서점");
+    titleLabel.setBounds(250, 30, 200, 50);
+    this.add(titleLabel);
+
+    // 검색 관련
+    searchLabel = new JLabel("책 검색");
+    searchTextField = new JTextField();
+    searchButton = new JButton("확인");
+
+    searchLabel.setBounds(50, 100, 60, 40);
+    searchTextField.setBounds(160, 100, 300, 40);
+    searchButton.setBounds(500, 100, 60, 40);
+    
+    this.add(searchLabel);
+    this.add(searchTextField);
+    this.add(searchButton);
+
     
   }
 
