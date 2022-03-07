@@ -1,4 +1,4 @@
-package usedbooks;
+package usedbooks.SellBuy;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -22,7 +22,7 @@ public class UsedBooksSell extends JFrame {
   Container cp;
   JLabel titleLabel, Lb_information, Lb_name, Lb_author, Lb_publication_date, Lb_price, Lb_won,
       Lb_quality;
-  JButton btnRegister, btnBack, btnLogout;
+  JButton btnRegister, btnBack;
   JTextField Tf_information, Tf_name, Tf_author, Tf_publication_date, Tf_price;
   JRadioButton[] qualityRadioButton = new JRadioButton[4];
   String[] qualityNames = {"최상", "상", "중", "하"};
@@ -35,11 +35,11 @@ public class UsedBooksSell extends JFrame {
 
     // 프레임
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    // this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setBounds(100, 100, 310, 500);
     cp.setBackground(new Color(255, 130, 150));
     this.initDesign();
-    this.setVisible(true); // 잠깐 닫아둔거임(//)
+//    this.setVisible(true); // 잠깐 닫아둔거임(//)
 
   }
 
@@ -61,22 +61,23 @@ public class UsedBooksSell extends JFrame {
     // JButton
     btnBack = new JButton("돌아가기");
     btnBack.addActionListener(new ActionListener() {
-      
+
       @Override
       public void actionPerformed(ActionEvent e) {
         dispose();
       }
     });
-    
-    btnRegister = new JButton("등록하기");
-    btnRegister.addActionListener(new ActionListener() {
 
+    //등록하기 ActionListener
+    btnRegister = new JButton("등록하기");
+
+    btnRegister.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         String name = Tf_name.getText();
         String author = Tf_author.getText();
         String publication_date = Tf_publication_date.getText();
-        int price = Integer.parseInt(Tf_price.getText()); // 왜 int가 안되는걸까..?
+        int price = Integer.parseInt(Tf_price.getText());
         String quality = null;
         for (int i = 0; i < qualityRadioButton.length; i++) {
           if (qualityRadioButton[i].isSelected()) {
@@ -85,12 +86,22 @@ public class UsedBooksSell extends JFrame {
         }
 
         save(name, author, publication_date, price, quality);
-        
+        JOptionPane.showMessageDialog(btnRegister, "판매할 책 등록이 완료되었습니다.");
+        // 초기화
+        Tf_name.setText("");
+        Tf_author.setText("");
+        Tf_publication_date.setText("");
+        Tf_price.setText("");
+        for (int i = 0; i < qualityRadioButton.length; i++) {
+          qualityRadioButton[i].setSelected(true);
+          if (qualityRadioButton[i].isSelected()) {
+            
+          }
+        }
+//        qualityRadioButton[].setSelected(false);
       }
+      
     });
-    
-    
-    btnLogout = new JButton("로그아웃");
 
     // JTextfield
     Tf_name = new JTextField();
@@ -138,17 +149,12 @@ public class UsedBooksSell extends JFrame {
     Lb_quality.setBounds(50, 210, 90, 30);
     this.add(Lb_quality);
 
-    // JButton...중복체크없애기(라디오버튼 그룹)
-
-
+    //JButton
     btnBack.setBounds(50, 400, 90, 30);
     this.add(btnBack);
 
     btnRegister.setBounds(150, 400, 90, 30);
     this.add(btnRegister);
-
-    btnLogout.setBounds(200, 10, 90, 30);
-    this.add(btnLogout);
 
     // JTextfield
     Tf_name.setBounds(110, 100, 120, 20);

@@ -1,4 +1,4 @@
-package usedbooks;
+package usedbooks.SellBuy;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -50,22 +50,17 @@ public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionList
 
     // JLabel
     titleLabel = new JLabel("중고책 온라인 서점", JLabel.CENTER);
-
-    // JButton
-    btnSell = new JButton("책 판매하기");
-    btnBuy = new JButton("책 구매하기");
-
-    // 모든 컴포넌트들(label,tf,cb,btn)의 위치지정하기
-    // JLabel
     titleLabel.setBounds(75, 50, 150, 30);
     titleLabel.setOpaque(false); // 불투명
     this.add(titleLabel);
-
+    
     // JButton
+    btnSell = new JButton("책 판매하기");
     btnSell.setBounds(90, 150, 120, 30);
     btnSell.addActionListener(this);
     this.add(btnSell);
-
+    
+    btnBuy = new JButton("책 구매하기");
     btnBuy.setBounds(90, 200, 120, 30);
     btnBuy.addActionListener(this);
     this.add(btnBuy);
