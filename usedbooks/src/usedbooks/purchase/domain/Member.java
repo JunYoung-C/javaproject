@@ -1,5 +1,6 @@
 package usedbooks.purchase.domain;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Member {
@@ -8,11 +9,10 @@ public class Member {
   private String id;
   private String password;
   private String name;
-  private LocalDateTime birth;
+  private Date birth;
   private String phoneNumber;
   private String address;
-
-  public Member(Long memberId, String id, String password, String name, LocalDateTime birth,
+  public Member(Long memberId, String id, String password, String name, Date birth,
       String phoneNumber, String address) {
     super();
     this.memberId = memberId;
@@ -23,32 +23,26 @@ public class Member {
     this.phoneNumber = phoneNumber;
     this.address = address;
   }
-
   public Long getMemberId() {
     return memberId;
   }
-
   public String getId() {
     return id;
   }
-
   public String getPassword() {
     return password;
   }
-
   public String getName() {
     return name;
   }
-
-  public LocalDateTime getBirth() {
+  public Date getBirth() {
     return birth;
   }
-
   public String getPhoneNumber() {
     return phoneNumber;
   }
-
   public String getAddress() {
     return address;
   }
+  
 }

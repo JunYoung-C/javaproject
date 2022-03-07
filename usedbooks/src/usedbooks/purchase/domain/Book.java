@@ -1,5 +1,6 @@
 package usedbooks.purchase.domain;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class Book {
@@ -7,11 +8,11 @@ public class Book {
   private Long MemberId;
   private String name;
   private String author;
-  private LocalDateTime publicationDate;
+  private Date publicationDate;
   private int price;
   private String quality;
 
-  public Book(Long bookId, Long memberId, String name, String author, LocalDateTime publicationDate,
+  public Book(Long bookId, Long memberId, String name, String author, Date publicationDate,
       int price, String quality) {
     super();
     this.bookId = bookId;
@@ -39,7 +40,7 @@ public class Book {
     return author;
   }
 
-  public LocalDateTime getPublicationDate() {
+  public Date getPublicationDate() {
     return publicationDate;
   }
 
