@@ -14,10 +14,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import usedbooks.purchase.domain.Book;
+import usedbooks.purchase.domain.Member;
 import usedbooks.purchase.repository.BookRepository;
+import usedbooks.purchase.repository.MemberRepository;
 
 public class BookInfoView extends JFrame {
   private final BookRepository bookRepository = new BookRepository();
+  private final MemberRepository memberRepository = new MemberRepository();
+  PurchaseView perchaseview = new PurchaseView("책 구매하기");
 
   Container cp;
   JLabel titleLabel, searchLabel;
@@ -70,10 +74,21 @@ public class BookInfoView extends JFrame {
 
     this.add(selectButton);
     this.add(returnButton);
-    
-    selectButton.addActionListener(null);
+
+    selectButton.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        Long selectedBookId = Long.parseLong(booksTableModel.getValueAt(booksTable.getSelectedRow(), 0).toString());
+        Long selectedMemberId = bookRepository.findById(selectedBookId).getMemberId();
+        Member selectedMember =memberRepository.findById(selectedMemberId); 
+        
+        perchaseview.changeSellerInfo(selectedMember.getName(), selectedMember.getPhoneNumber());
+        perchaseview.setVisible(true);
+      }
+    });
     returnButton.addActionListener(new ActionListener() {
-      
+
       @Override
       public void actionPerformed(ActionEvent e) {
         setVisible(false);
@@ -102,15 +117,15 @@ public class BookInfoView extends JFrame {
     this.add(searchLabel);
     this.add(searchTextField);
     this.add(searchButton);
-    
+
     searchButton.addActionListener(new ActionListener() {
-      
+
       @Override
       public void actionPerformed(ActionEvent e) {
         String name = searchTextField.getText();
         searchTextField.setText("");
         booksTableModel.setRowCount(0);
-        for (Book book : bookRepository.findByName(name)) {
+        for (Book book : bookRepository.findAllByName(name)) {
           booksTableModel.addRow(getStringData(book));
         }
       }
@@ -131,6 +146,6 @@ public class BookInfoView extends JFrame {
   }
 
   public static void main(String[] args) {
-    new BookInfoView("책 구매하기");
+    new BookInfoView("책 정보");
   }
 }
