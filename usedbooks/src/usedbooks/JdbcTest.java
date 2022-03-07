@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JdbcTest {
-  static final String ORACLE_LOCAL = "jdbc:oracle:thin:@localhost:1521:XE"; // localhost는 ip주소로 입력
+  static final String ORACLE_LOCAL="jdbc:oracle:thin:@localhost:1521:XE"; // localhost는 ip주소로 입력
                                                                             // 가능
 
   public void connectSawon() {
@@ -18,7 +18,7 @@ public class JdbcTest {
     String sql = "select * from sawon order by num";
 
     try {
-      conn = DriverManager.getConnection(ORACLE_LOCAL, "angel", "a1234");
+      conn = DriverManager.getConnection(ORACLE_LOCAL, "giyam", "a1234");
       System.out.println("오라클 서버 연결 성공");
 
       stmt = conn.createStatement();
