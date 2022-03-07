@@ -52,6 +52,10 @@ public class BookView extends JFrame {
 
     // 책선택, 돌아가기 버튼
     setSelectAndReturnButton();
+
+    for (Book book : bookRepository.findAll()) {
+      booksTableModel.addRow(getStringData(book));
+    }
   }
 
   private void setSelectAndReturnButton() {
@@ -88,6 +92,18 @@ public class BookView extends JFrame {
     this.add(searchButton);
   }
 
+  private Vector<String> getStringData(Book book) {
+    Vector<String> data = new Vector<String>();
+
+    data.add(String.valueOf(book.getBookId()));
+    data.add(book.getBookName());
+    data.add(book.getAuthor());
+    data.add(book.getPublicationDate().toString());
+    data.add(String.valueOf(book.getPrice()) + "원");
+    data.add(book.getQuality());
+
+    return data;
+  }
 
   public static void main(String[] args) {
     new BookView("책 구매하기");
