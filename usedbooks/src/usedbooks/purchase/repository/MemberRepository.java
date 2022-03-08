@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import usedbooks.DbConnect;
 import usedbooks.purchase.domain.Member;
 
 public class MemberRepository {

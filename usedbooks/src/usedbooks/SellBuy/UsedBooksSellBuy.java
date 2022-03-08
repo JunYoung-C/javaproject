@@ -19,6 +19,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import usedbooks.DbConnect;
+
 public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionListener {
 
 	DbConnect db = new DbConnect();

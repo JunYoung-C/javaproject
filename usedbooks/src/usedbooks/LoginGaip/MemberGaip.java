@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import usedbooks.DbConnect;
+
 public class MemberGaip extends JFrame implements ActionListener {
 	DbConnect db = new DbConnect();
 

@@ -18,6 +18,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import usedbooks.DbConnect;
+
 public class UsedBooksSell extends JFrame implements ActionListener {
 	DbConnect db = new DbConnect();
 	Container cp;

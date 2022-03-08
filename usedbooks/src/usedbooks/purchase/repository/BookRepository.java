@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Vector;
+
+import usedbooks.DbConnect;
 import usedbooks.purchase.domain.Book;
 
 public class BookRepository {

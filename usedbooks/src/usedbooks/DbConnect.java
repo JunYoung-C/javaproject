@@ -1,4 +1,4 @@
-package usedbooks.SellBuy;
+package usedbooks;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
