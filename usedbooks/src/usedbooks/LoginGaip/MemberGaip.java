@@ -31,30 +31,27 @@ public class MemberGaip extends JFrame implements ActionListener {
 	JTextField tfBirth, tfPhoneNumber, tfAddress;
 
 	JButton btnGaip, btnIdcheck;
-	
-	
-	//Font color
-	Color c_title=new Color(49,130,246);
-	Color c_white=new Color(255,255,255);
-	Color c_black=new Color(27,29,31);
-	Color c_gray=new Color(169,169,169);
-	
-	Color c_button=new Color(23,133,242);
 
-	//Title Font
-	Font f_title = new Font("맑은 고딕",Font.BOLD,30);
+	// Font color
+	Color c_title = new Color(49, 130, 246);
+	Color c_white = new Color(255, 255, 255);
+	Color c_black = new Color(27, 29, 31);
+	Color c_gray = new Color(169, 169, 169);
 
-	//Text Font
-	Font f_text = new Font("맑은 고딕",Font.BOLD,15);
-	Font f_smallText = new Font("맑은 고딕",Font.PLAIN,11);
-	
+	Color c_button = new Color(23, 133, 242);
 
+	// Title Font
+	Font f_title = new Font("맑은 고딕", Font.BOLD, 30);
+
+	// Text Font
+	Font f_text = new Font("맑은 고딕", Font.BOLD, 15);
+	Font f_smallText = new Font("맑은 고딕", Font.PLAIN, 11);
 
 	public MemberGaip(String title) {
 		super(title);
 		cp = this.getContentPane();
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 630, 450);
 		cp.setBackground(new Color(255, 255, 255));
 		this.initDesign();
@@ -133,17 +130,18 @@ public class MemberGaip extends JFrame implements ActionListener {
 		btnGaip.setForeground(c_white);
 		btnGaip.setBorderPainted(false);
 		btnGaip.setFocusPainted(false);
+		btnGaip.addActionListener(this);
 		this.add(btnGaip);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object ob = e.getSource();
-		String jc=tfId.getText();
-		
-		//중복
+		System.out.println(ob);
+
+		// 중복
 		if (ob == btnIdcheck) {
-			if (jc.trim().length() < 1) {
+			if (tfId.getText().trim().length() < 1) {
 				JOptionPane.showMessageDialog(this, "ID를 입력하세요");
 				tfId.requestFocus();
 				return;
@@ -153,51 +151,69 @@ public class MemberGaip extends JFrame implements ActionListener {
 			} else {
 				JOptionPane.showMessageDialog(this, "중복된 아이디입니다");
 			}
-			}
-		
-		/*if(ob== btnGaip) {
-			if (tfId.trim().length() == 0 || tfPassword.trim().length() == 0 || tfName.trim().length() == 0
-					|| tfBirth.trim().length() == 0 || tfPhoneNumber.trim().length() == 0 || tfAddress == null) {
+		} else if (ob == btnGaip) {
+			String id = tfId.getText();
+			String password = tfPassword.getText();
+			String name = tfName.getText();
+			String birth = tfBirth.getText();
+			String phoneNumber = tfPhoneNumber.getText();
+			String address = tfAddress.getText();
+
+			System.out.println(1);
+			System.out.println(id + " " + password + " " + name + " " + birth + " " + phoneNumber + " " + address);
+			if (id.trim().length() == 0 || password.trim().length() == 0 || name.trim().length() == 0
+					|| birth.trim().length() == 0 || phoneNumber.trim().length() == 0 || address.trim().length() == 0) {
 				JOptionPane.showMessageDialog(this, "비어있는 행이 있습니다.");
 				return;
-			}*/
-		}
-	
+			}
 
-	
+			JOptionPane.showMessageDialog(this, "회원가입이 되었습니다");
+
+			// 초기화면
+			tfId.setText("");
+			tfPassword.setText("");
+			tfName.setText("");
+			tfBirth.setText("");
+			tfPhoneNumber.setText("");
+			tfAddress.setText("");
+
+			// 회원가입 추가프레임 사라지게
+			setVisible(false);
+		}
+	}
 
 // 회원가입 중복 메서드
 	public int findById(String id) {
-	Connection conn = db.getOracle();
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+		Connection conn = db.getOracle();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-	String sql = "select count(*) cnt from member where id=?";
+		String sql = "select count(*) cnt from member where id=?";
 
-	int number = 0;
+		int number = 0;
 
-	try {
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, id);
-		rs = pstmt.executeQuery();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
 
-		rs.next();
+			rs.next();
 
-		number = rs.getInt("cnt");
+			number = rs.getInt("cnt");
 
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} finally {
-		db.dbClose(rs, pstmt, conn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(rs, pstmt, conn);
+		}
+		return number;
 	}
-	return number;
-}
-/*
- * public static void main(String[] args) { // TODO Auto-generated method stub
- * 
- * 
- * 
- * new MemberGaip("회원가입폼"); }
- */
+	/*
+	 * public static void main(String[] args) { // TODO Auto-generated method stub
+	 * 
+	 * 
+	 * 
+	 * new MemberGaip("회원가입폼"); }
+	 */
 }

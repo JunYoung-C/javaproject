@@ -216,31 +216,9 @@ public class Login extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "아이디 비밀번호가 틀립니다");
 			}
 
-		}
-
-		if (ob == btnGaip) {
+		}else if (ob == btnGaip) {
 			memberframe.setVisible(true);
-		} else if (ob == memberframe.btnGaip) {
-			JOptionPane.showMessageDialog(this, "회원가입이 되었습니다");
-			// 회원가입 추가
-			insertMember();
-
-			// 로그인 화면 다시 출력
-			initDesign();
-
-			// 초기화면
-			memberframe.tfId.setText("");
-			memberframe.tfPassword.setText("");
-			memberframe.tfName.setText("");
-			memberframe.tfBirth.setText("");
-			memberframe.tfPhoneNumber.setText("");
-			memberframe.tfAddress.setText("");
-
-			// 회원가입 추가프레임 사라지게
-			memberframe.setVisible(false);
-
-		}
-
+		} 
 	}
 
 	public static void main(String[] args) {
