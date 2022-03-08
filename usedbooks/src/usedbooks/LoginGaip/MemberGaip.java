@@ -62,7 +62,7 @@ public class MemberGaip extends JFrame implements ActionListener {
 		this.setLayout(null);
 
 		// label
-		titleLabel = new JLabel("중고책 온라인 서점", JLabel.CENTER);
+		titleLabel = new JLabel("온라인 중고책 서점", JLabel.CENTER);
 		titleLabel.setBounds(110, 50, 400, 40);
 		titleLabel.setOpaque(false); // 투명
 		titleLabel.setFont(f_title);
@@ -137,7 +137,6 @@ public class MemberGaip extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object ob = e.getSource();
-		System.out.println(ob);
 
 		// 중복
 		if (ob == btnIdcheck) {
@@ -159,14 +158,14 @@ public class MemberGaip extends JFrame implements ActionListener {
 			String phoneNumber = tfPhoneNumber.getText();
 			String address = tfAddress.getText();
 
-			System.out.println(1);
-			System.out.println(id + " " + password + " " + name + " " + birth + " " + phoneNumber + " " + address);
 			if (id.trim().length() == 0 || password.trim().length() == 0 || name.trim().length() == 0
 					|| birth.trim().length() == 0 || phoneNumber.trim().length() == 0 || address.trim().length() == 0) {
 				JOptionPane.showMessageDialog(this, "비어있는 행이 있습니다.");
 				return;
 			}
 
+			insertMember();
+			
 			JOptionPane.showMessageDialog(this, "회원가입이 되었습니다");
 
 			// 초기화면
@@ -209,11 +208,39 @@ public class MemberGaip extends JFrame implements ActionListener {
 		}
 		return number;
 	}
-	/*
-	 * public static void main(String[] args) { // TODO Auto-generated method stub
-	 * 
-	 * 
-	 * 
-	 * new MemberGaip("회원가입폼"); }
-	 */
+	
+	public void insertMember() {
+		String id = tfId.getText();
+		String password = tfPassword.getText();
+		String name = tfName.getText();
+		String birth = tfBirth.getText();
+		String phoneNumber = tfPhoneNumber.getText();
+		String address = tfAddress.getText();
+
+		String sql = "insert into member values(member_seq.nextval, ?,?,?,?,?,?)";
+
+		Connection conn = db.getOracle();
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			// 바인딩
+			pstmt.setString(1, id);
+			pstmt.setString(2, password);
+			pstmt.setString(3, name);
+			pstmt.setString(4, birth);
+			pstmt.setString(5, phoneNumber);
+			pstmt.setString(6, address);
+
+			// 실행
+			pstmt.execute();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.dbClose(pstmt, conn);
+		}
+	}
 }

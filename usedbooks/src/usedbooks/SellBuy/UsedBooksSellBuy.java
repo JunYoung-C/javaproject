@@ -20,9 +20,10 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import usedbooks.DbConnect;
+import usedbooks.footer.TeamInfoLabel;
 import usedbooks.purchase.view.BookInfoView;
 
-public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionListener {
+public class UsedBooksSellBuy extends JFrame implements ActionListener {
 
 	DbConnect db = new DbConnect();
 
@@ -35,18 +36,20 @@ public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionList
 	// 판매하기 버튼 눌렀을때 UsedBooksSell 프레임 추가
 	UsedBooksSell sellFrame = new UsedBooksSell("중고책 판매 등록");
 	BookInfoView bookInfoView = new BookInfoView("중고책 리스트");
-	
+
+	public static Long memberId = null;
+
 	public UsedBooksSellBuy(String title) {
 
 		super(title);
 		cp = this.getContentPane();
 
 		// 프레임
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 630, 450); // JFrame 크기 통일
 		cp.setBackground(new Color(255, 255, 255));
 		this.initDesign();
-		this.setVisible(true);
+		this.setVisible(false);
 	}
 
 	// 디자인
@@ -77,12 +80,7 @@ public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionList
 		titleLabel.setForeground(c_title);
 		this.add(titleLabel);
 
-		cooperateLabel = new JLabel("4조 일등을조 - 최준영, 이용기, 조정언", JLabel.CENTER);
-		cooperateLabel.setBounds(110, 350, 400, 40);
-		cooperateLabel.setOpaque(false); // 투명
-		cooperateLabel.setFont(f_smallText);
-		cooperateLabel.setForeground(c_gray);
-		this.add(cooperateLabel);
+		TeamInfoLabel.set(cooperateLabel, f_smallText, c_gray, this);
 
 		// JButton
 		btnSell = new JButton("책 판매하기");
@@ -109,12 +107,6 @@ public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionList
 
 	}
 
-	public static void main(String[] args) {
-
-		new UsedBooksSellBuy("온라인 중고책 서점 메인");
-
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object ob = e.getSource();
@@ -122,15 +114,8 @@ public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionList
 		if (ob == btnSell) {
 			sellFrame.setVisible(true);
 		} else if (ob == btnBuy) {
+			bookInfoView.writeAllBook();
 			bookInfoView.setVisible(true);
 		}
-
 	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

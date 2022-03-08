@@ -61,8 +61,6 @@ public class BookInfoView extends JFrame implements ActionListener {
 		setSearchArea();
 		setBookTableArea();
 		setSelectAndReturnButton();
-
-		writeAllBook();
 	}
 
 	private void setTitleLabel() {

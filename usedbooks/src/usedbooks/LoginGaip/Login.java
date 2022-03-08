@@ -17,46 +17,48 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import usedbooks.DbConnect;
+import usedbooks.SellBuy.UsedBooksSellBuy;
+import usedbooks.footer.TeamInfoLabel;
 
 public class Login extends JFrame implements ActionListener {
 
+	UsedBooksSellBuy usedBooksSellBuy = new UsedBooksSellBuy("온라인 중고책 서점 메인");
+	
 	DbConnect db = new DbConnect();
 
 	Container cp;
 
 	JButton btnLogin, btnGaip;
 
-	JLabel labelId, labelPassword, titleLabel;
+	JLabel labelId, labelPassword, titleLabel, cooperateLabel;
 
 	JTextField textId, textPassword, textLabel;
-	
-	
-	//Font color
-	Color c_title=new Color(49,130,246);
-	Color c_white=new Color(255,255,255);
-	Color c_black=new Color(27,29,31);
-	Color c_gray=new Color(169,169,169);
-	
-	Color c_button=new Color(23,133,242);
 
-	//Title Font
-	Font f_title = new Font("맑은 고딕",Font.BOLD,30);
+	// Font color
+	Color c_title = new Color(49, 130, 246);
+	Color c_white = new Color(255, 255, 255);
+	Color c_black = new Color(27, 29, 31);
+	Color c_gray = new Color(169, 169, 169);
 
-	//Text Font
-	Font f_text = new Font("맑은 고딕",Font.BOLD,15);
-	Font f_smallText = new Font("맑은 고딕",Font.PLAIN,11);
+	Color c_button = new Color(23, 133, 242);
+
+	// Title Font
+	Font f_title = new Font("맑은 고딕", Font.BOLD, 30);
+
+	// Text Font
+	Font f_text = new Font("맑은 고딕", Font.BOLD, 15);
+	Font f_smallText = new Font("맑은 고딕", Font.PLAIN, 11);
 	Font f_bigText = new Font("맑은 고딕", Font.PLAIN, 23);
-
 
 	// memberGaip frame
 	MemberGaip memberframe = new MemberGaip("회원가입");
-
+	
 	public Login(String title) {
 		super(title);
 		cp = this.getContentPane();
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, 630, 500);
+		this.setBounds(100, 100, 630, 450);
 		cp.setBackground(new Color(255, 255, 255));
 		this.initDesign();
 		this.setVisible(true);
@@ -65,7 +67,7 @@ public class Login extends JFrame implements ActionListener {
 	public void initDesign() {
 		this.setLayout(null);
 
-	
+		TeamInfoLabel.set(cooperateLabel, f_smallText, c_gray, this);
 		
 		textId = new JTextField();
 		textId.setBounds(170, 130, 300, 30);
@@ -87,13 +89,13 @@ public class Login extends JFrame implements ActionListener {
 		labelId = new JLabel("ID", JLabel.LEFT);
 		labelId.setBounds(140, 130, 70, 30);
 		labelId.setFont(f_bigText);
-		//labelId.setFont(new Font("맑은 고딕",Font.PLAIN, 12));
+		// labelId.setFont(new Font("맑은 고딕",Font.PLAIN, 12));
 		this.add(labelId);
 
 		labelPassword = new JLabel("PW", JLabel.LEFT);
 		labelPassword.setBounds(130, 175, 70, 30);
 		labelPassword.setFont(f_bigText);
-		//labelPassword.setFont(new Font("맑은 고딕",Font.PLAIN, 12));
+		// labelPassword.setFont(new Font("맑은 고딕",Font.PLAIN, 12));
 		this.add(labelPassword);
 
 		// 로그인 버튼
@@ -126,45 +128,9 @@ public class Login extends JFrame implements ActionListener {
 
 	}
 
-	// btnGaip클릭시
-	public void insertMember() {
-		String id = memberframe.tfId.getText();
-		String password = memberframe.tfPassword.getText();
-		String name = memberframe.tfName.getText();
-		String birth = memberframe.tfBirth.getText();
-		// Date birth=memberframe.tfB
-		String phoneNumber = memberframe.tfPhoneNumber.getText();
-		String address = memberframe.tfAddress.getText();
-
-		String sql = "insert into member values(member_seq.nextval, ?,?,?,?,?,?)";
-
-		Connection conn = db.getOracle();
-		PreparedStatement pstmt = null;
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-
-			// 바인딩
-			pstmt.setString(1, id);
-			pstmt.setString(2, password);
-			pstmt.setString(3, name);
-			pstmt.setString(4, birth);
-			pstmt.setString(5, phoneNumber);
-			pstmt.setString(6, address);
-
-			// 실행
-			pstmt.execute();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			db.dbClose(pstmt, conn);
-		}
-	}
-
 	// 로그인 하기
-	public boolean findByLoginIdAndPassword(String id, String password) {
+	public Long findByLoginIdAndPassword(String id, String password) {
+		Long findMemberid = null;
 		Connection conn = db.getOracle();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -180,7 +146,7 @@ public class Login extends JFrame implements ActionListener {
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				return true; // 로그인 성공
+				findMemberid = rs.getLong("member_id");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -188,8 +154,8 @@ public class Login extends JFrame implements ActionListener {
 		} finally {
 			db.dbClose(rs, pstmt, conn);
 		}
-		return false; // 로그인 실패
 
+		return findMemberid;
 	}
 
 	// 버튼 이벤트
@@ -210,12 +176,18 @@ public class Login extends JFrame implements ActionListener {
 				textPassword.requestFocus();
 				return;
 			}
-			if (findByLoginIdAndPassword(loginId, loginPassword)) {
+			
+			Long findMemberId =findByLoginIdAndPassword(loginId, loginPassword);
+			if (findMemberId != null) {
 				JOptionPane.showMessageDialog(this, "로그인이 되었습니다");
+				usedBooksSellBuy.memberId = findMemberId;
+				System.out.println(usedBooksSellBuy.memberId);
+				usedBooksSellBuy.setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(this, "아이디 비밀번호가 틀립니다");
 			}
 
+			
 		}else if (ob == btnGaip) {
 			memberframe.setVisible(true);
 		} 

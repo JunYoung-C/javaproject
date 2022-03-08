@@ -28,7 +28,7 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 	JTextField Tf_information, Tf_name, Tf_author, Tf_publication_date, Tf_price;
 	JRadioButton[] qualityRadioButton = new JRadioButton[4];
 	String[] qualityNames = { "최상", "상", "중", "하" };
-	String memberId = null;
+//	String memberId = null;
 
 	public UsedBooksSell(String title) {
 
@@ -202,7 +202,7 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 			pstmt = conn.prepareStatement(sql);
 
 			// ? 바인딩
-			pstmt.setString(1, memberId);
+			pstmt.setLong(1, UsedBooksSellBuy.memberId);
 			pstmt.setString(2, name);
 			pstmt.setString(3, author);
 			pstmt.setString(4, publication_date);
@@ -243,25 +243,13 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 			}
 
 			save(name, author, publication_date, Integer.parseInt(priceStr), quality);
-			JOptionPane.showMessageDialog(btnRegister, "판매할 책 등록이 완료되었습니다.");
+			JOptionPane.showMessageDialog(this, "판매할 책 등록이 완료되었습니다.");
 			// 초기화
 			Tf_name.setText("");
 			Tf_author.setText("");
 			Tf_publication_date.setText("");
 			Tf_price.setText("");
-			for (int i = 0; i < qualityRadioButton.length; i++) {
-				qualityRadioButton[i].setSelected(true);
-				if (qualityRadioButton[i].isSelected()) {
-
-				}
-			}
+			this.setVisible(false);
 		}
 	}
-
-	public static void main(String[] args) {
-
-		new UsedBooksSell("판매폼 테스트");
-
-	}
-
 }
