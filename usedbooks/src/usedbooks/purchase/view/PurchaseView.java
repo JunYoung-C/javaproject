@@ -20,84 +20,84 @@ import usedbooks.purchase.repository.BookRepository;
 import usedbooks.purchase.repository.MemberRepository;
 
 public class PurchaseView extends JFrame implements ActionListener {
-  private final BookRepository bookRepository = new BookRepository();
-  BookInfoView bookInfoView;
-  
-  Container cp;
-  JLabel titleLabel, sellerNameLabel, sellerPhoneNumberLabel;
-  JButton purchaseButton, returnButton;
-  Long selectedBookId;
-  
-  public PurchaseView(String title, BookInfoView bookInfoView) {
-    super(title);
-    this.bookInfoView = bookInfoView;
-    cp = this.getContentPane();
+	private final BookRepository bookRepository = new BookRepository();
+	BookInfoView bookInfoView;
 
-    this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-    this.setBounds(200, 200, 450, 450);
-    cp.setBackground(new Color(100, 100, 100));
+	Container cp;
+	JLabel titleLabel, sellerNameLabel, sellerPhoneNumberLabel;
+	JButton purchaseButton, returnButton;
+	Long selectedBookId;
 
-    initDesign();
+	public PurchaseView(String title, BookInfoView bookInfoView) {
+		super(title);
+		this.bookInfoView = bookInfoView;
+		cp = this.getContentPane();
 
-    this.setVisible(false);
-    // this.setVisible(true);
-  }
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		this.setBounds(200, 200, 450, 450);
+		cp.setBackground(new Color(100, 100, 100));
 
-  private void initDesign() {
-    this.setLayout(null);
+		initDesign();
 
-    titleLabel = new JLabel("중고책 온라인 서점");
-    titleLabel.setBounds(150, 20, 200, 50);
-    this.add(titleLabel);
+		this.setVisible(false);
+		// this.setVisible(true);
+	}
 
-    sellerNameLabel = new JLabel("판매자 이름: ");
-    sellerPhoneNumberLabel = new JLabel("핸드폰 번호: ");
+	private void initDesign() {
+		this.setLayout(null);
 
-    sellerNameLabel.setBounds(100, 100, 350, 50);
-    sellerPhoneNumberLabel.setBounds(100, 150, 350, 50);
+		titleLabel = new JLabel("중고책 온라인 서점");
+		titleLabel.setBounds(150, 20, 200, 50);
+		this.add(titleLabel);
 
-    this.add(sellerNameLabel);
-    this.add(sellerPhoneNumberLabel);
+		sellerNameLabel = new JLabel("판매자 이름: ");
+		sellerPhoneNumberLabel = new JLabel("핸드폰 번호: ");
 
-    setPurchaseAndReturnButton();
+		sellerNameLabel.setBounds(100, 100, 350, 50);
+		sellerPhoneNumberLabel.setBounds(100, 150, 350, 50);
 
-  }
+		this.add(sellerNameLabel);
+		this.add(sellerPhoneNumberLabel);
 
-  public void changeSellerInfo(long bookId, String name, String phoneNumber) {
-    selectedBookId = bookId;
-    sellerNameLabel.setText("판매자 이름: " + name);
-    sellerPhoneNumberLabel.setText("핸드폰 번호: " + phoneNumber);
-  }
+		setPurchaseAndReturnButton();
 
-  private void setPurchaseAndReturnButton() {
-    purchaseButton = new JButton("구매하기");
-    returnButton = new JButton("돌아가기");
+	}
 
-    purchaseButton.setBounds(100, 300, 100, 40);
-    returnButton.setBounds(250, 300, 100, 40);
+	public void changeSellerInfo(long bookId, String name, String phoneNumber) {
+		selectedBookId = bookId;
+		sellerNameLabel.setText("판매자 이름: " + name);
+		sellerPhoneNumberLabel.setText("핸드폰 번호: " + phoneNumber);
+	}
 
-    this.add(purchaseButton);
-    this.add(returnButton);
+	private void setPurchaseAndReturnButton() {
+		purchaseButton = new JButton("구매하기");
+		returnButton = new JButton("돌아가기");
 
-    purchaseButton.addActionListener(this);
-    returnButton.addActionListener(this);
-  }
+		purchaseButton.setBounds(100, 300, 100, 40);
+		returnButton.setBounds(250, 300, 100, 40);
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    Object ob = e.getSource();
+		this.add(purchaseButton);
+		this.add(returnButton);
 
-    if (ob == purchaseButton) {
-      this.setVisible(false);
-      bookRepository.deleteById(selectedBookId);
-      JOptionPane.showMessageDialog(this, "구매하였습니다.");
-      bookInfoView.writeAllBook();
-    } else if (ob == returnButton) {
-      setVisible(false);
-    }
-  }
+		purchaseButton.addActionListener(this);
+		returnButton.addActionListener(this);
+	}
 
-  // public static void main(String[] args) {
-  // new PurchaseView("책 구매하기");
-  // }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object ob = e.getSource();
+
+		if (ob == purchaseButton) {
+			this.setVisible(false);
+			bookRepository.deleteById(selectedBookId);
+			JOptionPane.showMessageDialog(this, "구매하였습니다.");
+			bookInfoView.writeAllBook();
+		} else if (ob == returnButton) {
+			setVisible(false);
+		}
+	}
+
+	// public static void main(String[] args) {
+	// new PurchaseView("책 구매하기");
+	// }
 }
