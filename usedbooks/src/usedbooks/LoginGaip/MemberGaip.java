@@ -139,14 +139,32 @@ public class MemberGaip extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object ob = e.getSource();
+		String jc=tfId.getText();
+		
+		//중복
 		if (ob == btnIdcheck) {
+			if (jc.trim().length() < 1) {
+				JOptionPane.showMessageDialog(this, "ID를 입력하세요");
+				tfId.requestFocus();
+				return;
+			}
 			if (findById(tfId.getText()) == 0) {
 				JOptionPane.showMessageDialog(this, "사용가능한 아이디입니다");
 			} else {
 				JOptionPane.showMessageDialog(this, "중복된 아이디입니다");
 			}
+			}
+		
+		/*if(ob== btnGaip) {
+			if (tfId.trim().length() == 0 || tfPassword.trim().length() == 0 || tfName.trim().length() == 0
+					|| tfBirth.trim().length() == 0 || tfPhoneNumber.trim().length() == 0 || tfAddress == null) {
+				JOptionPane.showMessageDialog(this, "비어있는 행이 있습니다.");
+				return;
+			}*/
 		}
-	}
+	
+
+	
 
 // 회원가입 중복 메서드
 	public int findById(String id) {
