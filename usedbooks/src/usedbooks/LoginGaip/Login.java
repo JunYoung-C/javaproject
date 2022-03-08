@@ -183,6 +183,7 @@ public class Login extends JFrame implements ActionListener {
 				usedBooksSellBuy.memberId = findMemberId;
 				System.out.println(usedBooksSellBuy.memberId);
 				usedBooksSellBuy.setVisible(true);
+				this.setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(this, "아이디 비밀번호가 틀립니다");
 			}
@@ -195,7 +196,7 @@ public class Login extends JFrame implements ActionListener {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new Login("로그인,회원가입 화면");
+		new Login("로그인 화면");
 	}
 
 }
