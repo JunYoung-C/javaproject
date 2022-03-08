@@ -21,114 +21,110 @@ import javax.swing.table.DefaultTableModel;
 
 public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionListener {
 
-  DbConnect db = new DbConnect();
+	DbConnect db = new DbConnect();
 
-  Container cp;
-  DefaultTableModel mode;
-  JTable table;
-  JButton btnSell, btnBuy; // btnSell 판매하기, btnBuy 구매하기
-  JLabel titleLabel, cooperateLabel;
-  //Font
-  Font f_title,f_text, f_smallText;
-  Color c_title, c_button, c_text, c_white, c_black, c_gray;
+	Container cp;
+	DefaultTableModel model;
+	JTable table;
+	JButton btnSell, btnBuy; // btnSell 판매하기, btnBuy 구매하기
+	JLabel titleLabel, cooperateLabel;
 
-  // 판매하기 버튼 눌렀을때 UsedBooksSell 프레임 추가
-  UsedBooksSell sellFrame = new UsedBooksSell("중고책 판매 등록");
+	// 판매하기 버튼 눌렀을때 UsedBooksSell 프레임 추가
+	UsedBooksSell sellFrame = new UsedBooksSell("중고책 판매 등록");
 
-  public UsedBooksSellBuy(String title) {
+	public UsedBooksSellBuy(String title) {
 
-    super(title);
-    cp = this.getContentPane();
+		super(title);
+		cp = this.getContentPane();
 
-    // 프레임
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    this.setBounds(100, 100, 630, 450); //JFrame 크기 통일
-    cp.setBackground(new Color(255, 255, 255));
-    this.initDesign();
-    this.setVisible(true);
-  }
+		// 프레임
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(100, 100, 630, 450); // JFrame 크기 통일
+		cp.setBackground(new Color(255, 255, 255));
+		this.initDesign();
+		this.setVisible(true);
+	}
 
-  // 디자인
-  public void initDesign() {
-    this.setLayout(null);
+	// 디자인
+	public void initDesign() {
+		this.setLayout(null);
 
-    //Title Font
-    f_title = new Font("맑은 고딕",Font.BOLD,30); //...더 굵은폰트로 수정하기
-    
-    //Text Font
-    f_text = new Font("맑은 고딕",Font.BOLD,15);
-    f_smallText = new Font("맑은 고딕",Font.PLAIN,11);
-    
-    //Font Color
-    c_title = new Color(49,130,246);
-    c_white = new Color(255,255,255);
-    c_black = new Color(27,29,31);
-    c_gray = new Color(169,169,169);
-    
-    //Button Color
-    c_button = new Color(23,133,242);
-    
-    // JLabel
-    titleLabel = new JLabel("온라인 중고책 서점", JLabel.CENTER); //이름 온라인 중고책 서점으로 통일
-    titleLabel.setBounds(110, 50, 400, 40); //위치,크기 통일
-    titleLabel.setOpaque(false); // 투명
-    titleLabel.setFont(f_title);
-    titleLabel.setForeground(c_title);
-    this.add(titleLabel);
-    
-    cooperateLabel=new JLabel("4조 일등을조 - 최준영, 이용기, 조정언",JLabel.CENTER);
-    cooperateLabel.setBounds(110, 350, 400, 40);
-    cooperateLabel.setOpaque(false); // 투명
-    cooperateLabel.setFont(f_smallText);
-    cooperateLabel.setForeground(c_gray);
-    this.add(cooperateLabel);
-    
-    // JButton
-    btnSell = new JButton("책 판매하기");
-    btnSell.setBounds(110, 150, 150, 50);
-    btnSell.setFont(f_text);
-    btnSell.setBackground(c_button);
-    btnSell.setForeground(c_white);
-    btnSell.setBorderPainted(false);
-    btnSell.setFocusPainted(false);
-    
-    btnSell.addActionListener(this);
-    this.add(btnSell);
-    
-    btnBuy = new JButton("책 구매하기");
-    btnBuy.setBounds(360, 150, 150, 50);
-    btnBuy.setFont(f_text);
-    btnBuy.setBackground(c_button);
-    btnBuy.setForeground(c_white);
-    btnBuy.setBorderPainted(false);
-    btnBuy.setFocusPainted(false);
-    
-    btnBuy.addActionListener(this);
-    this.add(btnBuy);
+		// Title Font
+		Font f_title = new Font("맑은 고딕", Font.BOLD, 30); // ...더 굵은폰트로 수정하기
 
-  }
+		// Text Font
+		Font f_text = new Font("맑은 고딕", Font.BOLD, 15);
+		Font f_smallText = new Font("맑은 고딕", Font.PLAIN, 11);
 
+		// Font Color
+		Color c_title = new Color(49, 130, 246);
+		Color c_white = new Color(255, 255, 255);
+		Color c_black = new Color(27, 29, 31);
+		Color c_gray = new Color(169, 169, 169);
 
-  public static void main(String[] args) {
+		// Button Color
+		Color c_button = new Color(23, 133, 242);
 
-    new UsedBooksSellBuy("온라인 중고책 서점 메인");
+		// JLabel
+		titleLabel = new JLabel("온라인 중고책 서점", JLabel.CENTER); // 이름 온라인 중고책 서점으로 통일
+		titleLabel.setBounds(110, 50, 400, 40); // 위치,크기 통일
+		titleLabel.setOpaque(false); // 투명
+		titleLabel.setFont(f_title);
+		titleLabel.setForeground(c_title);
+		this.add(titleLabel);
 
-  }
+		cooperateLabel = new JLabel("4조 일등을조 - 최준영, 이용기, 조정언", JLabel.CENTER);
+		cooperateLabel.setBounds(110, 350, 400, 40);
+		cooperateLabel.setOpaque(false); // 투명
+		cooperateLabel.setFont(f_smallText);
+		cooperateLabel.setForeground(c_gray);
+		this.add(cooperateLabel);
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    Object ob = e.getSource();
+		// JButton
+		btnSell = new JButton("책 판매하기");
+		btnSell.setBounds(110, 150, 150, 50);
+		btnSell.setFont(f_text);
+		btnSell.setBackground(c_button);
+		btnSell.setForeground(c_white);
+		btnSell.setBorderPainted(false);
+		btnSell.setFocusPainted(false);
 
-    if (ob == btnSell) {
-      sellFrame.setVisible(true);
-    }
+		btnSell.addActionListener(this);
+		this.add(btnSell);
 
-  }
+		btnBuy = new JButton("책 구매하기");
+		btnBuy.setBounds(360, 150, 150, 50);
+		btnBuy.setFont(f_text);
+		btnBuy.setBackground(c_button);
+		btnBuy.setForeground(c_white);
+		btnBuy.setBorderPainted(false);
+		btnBuy.setFocusPainted(false);
 
-  @Override
-  public void itemStateChanged(ItemEvent e) {
-    // TODO Auto-generated method stub
+		btnBuy.addActionListener(this);
+		this.add(btnBuy);
 
-  }
+	}
+
+	public static void main(String[] args) {
+
+		new UsedBooksSellBuy("온라인 중고책 서점 메인");
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object ob = e.getSource();
+
+		if (ob == btnSell) {
+			sellFrame.setVisible(true);
+		}
+
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

@@ -27,13 +27,7 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 	JRadioButton[] qualityRadioButton = new JRadioButton[4];
 	String[] qualityNames = { "최상", "상", "중", "하" };
 	String memberId = null;
-	//Font
-	Font f_title,f_text, f_smallText;
-	Color c_title, c_button, c_text, c_white, c_black, c_gray;
 
-
-	
-	
 	public UsedBooksSell(String title) {
 
 		super(title);
@@ -45,7 +39,7 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 		this.setBounds(100, 100, 630, 450);
 		cp.setBackground(new Color(255, 255, 255));
 		this.initDesign();
-//		this.setVisible(true); // 테스트용(//)
+		this.setVisible(true); // 테스트용(//)
 
 	}
 
@@ -53,22 +47,22 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 	public void initDesign() {
 
 		this.setLayout(null);
-	    //Title Font
-	    f_title = new Font("맑은 고딕",Font.BOLD,30); //...더 굵은폰트로 수정하기
-	    
-	    //Text Font
-	    f_text = new Font("맑은 고딕",Font.BOLD,15);
-	    f_smallText = new Font("맑은 고딕",Font.PLAIN,11);
-	    
-	    //Font Color
-	    c_title = new Color(49,130,246);
-	    c_white = new Color(255,255,255);
-	    c_black = new Color(27,29,31);
-	    c_gray = new Color(169,169,169);
-	    
-	    //Button Color
-	    c_button = new Color(23,133,242);
-		
+		// Title Font
+		Font f_title = new Font("맑은 고딕", Font.BOLD, 30); // ...더 굵은폰트로 수정하기
+
+		// Text Font
+		Font f_text = new Font("맑은 고딕", Font.BOLD, 15);
+		Font f_smallText = new Font("맑은 고딕", Font.PLAIN, 11);
+
+		// Font Color
+		Color c_title = new Color(49, 130, 246);
+		Color c_white = new Color(255, 255, 255);
+		Color c_black = new Color(27, 29, 31);
+		Color c_gray = new Color(169, 169, 169);
+
+		// Button Color
+		Color c_button = new Color(23, 133, 242);
+
 		// JLabel
 		titleLabel = new JLabel("온라인 중고책 서점", JLabel.CENTER);
 		Lb_information = new JLabel("\"등록할 책의 정보를 입력하세요.\"");
@@ -107,21 +101,22 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 			qualityRadioButton[i] = new JRadioButton(qualityNames[i]);
 			btnGroup.add(qualityRadioButton[i]);
 
-			qualityRadioButton[i].setBounds(qualityX, 273, 50, 30);
-			qualityX += 45;
+			qualityRadioButton[i].setBounds(qualityX, 273, 55, 30);
+			qualityX += 50;
 			qualityRadioButton[i].setOpaque(false);
-			qualityRadioButton[i].setBackground(c_button);
+			qualityRadioButton[i].setFont(f_text);
+			qualityRadioButton[i].setForeground(c_black);
 			this.add(qualityRadioButton[i]);
 
 		}
 
 		// 모든 컴포넌트 위치 지정
 		// JLabel
-		titleLabel.setBounds(110, 50, 400, 40); //위치,크기 통일
-	    titleLabel.setOpaque(false); // 투명
-	    titleLabel.setFont(f_title);
-	    titleLabel.setForeground(c_title);
-	    this.add(titleLabel);
+		titleLabel.setBounds(110, 50, 400, 40); // 위치,크기 통일
+		titleLabel.setOpaque(false); // 투명
+		titleLabel.setFont(f_title);
+		titleLabel.setForeground(c_title);
+		this.add(titleLabel);
 
 		Lb_information.setBounds(190, 100, 250, 30);
 		Lb_information.setOpaque(false); // 투명
@@ -244,7 +239,7 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "비어있는 행이 있습니다.");
 				return;
 			}
-			
+
 			save(name, author, publication_date, Integer.parseInt(priceStr), quality);
 			JOptionPane.showMessageDialog(btnRegister, "판매할 책 등록이 완료되었습니다.");
 			// 초기화
