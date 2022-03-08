@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import usedbooks.DbConnect;
+import usedbooks.purchase.view.BookInfoView;
 
 public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionListener {
 
@@ -33,7 +34,8 @@ public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionList
 
 	// 판매하기 버튼 눌렀을때 UsedBooksSell 프레임 추가
 	UsedBooksSell sellFrame = new UsedBooksSell("중고책 판매 등록");
-
+	BookInfoView bookInfoView = new BookInfoView("중고책 리스트");
+	
 	public UsedBooksSellBuy(String title) {
 
 		super(title);
@@ -119,6 +121,8 @@ public class UsedBooksSellBuy extends JFrame implements ItemListener, ActionList
 
 		if (ob == btnSell) {
 			sellFrame.setVisible(true);
+		} else if (ob == btnBuy) {
+			bookInfoView.setVisible(true);
 		}
 
 	}

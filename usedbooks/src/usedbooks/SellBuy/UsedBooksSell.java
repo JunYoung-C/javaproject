@@ -41,7 +41,7 @@ public class UsedBooksSell extends JFrame implements ActionListener {
 		this.setBounds(100, 100, 630, 450);
 		cp.setBackground(new Color(255, 255, 255));
 		this.initDesign();
-		this.setVisible(true); // 테스트용(//)
+		this.setVisible(false);
 
 	}
 

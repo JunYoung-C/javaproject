@@ -44,7 +44,7 @@ public class PurchaseView extends JFrame implements ActionListener {
 		this.bookInfoView = bookInfoView;
 		cp = this.getContentPane();
 
-		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 630, 450); 
 		cp.setBackground(new Color(255, 255, 255));
 

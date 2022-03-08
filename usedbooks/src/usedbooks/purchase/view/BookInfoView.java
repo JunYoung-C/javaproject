@@ -45,13 +45,13 @@ public class BookInfoView extends JFrame implements ActionListener {
 		super(title);
 		cp = this.getContentPane();
 
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setBounds(100, 100, 630, 700);
 		cp.setBackground(new Color(255, 255, 255));
 
 		initDesign();
 
-		this.setVisible(true);
+		this.setVisible(false);
 	}
 
 	private void initDesign() {
@@ -179,10 +179,6 @@ public class BookInfoView extends JFrame implements ActionListener {
 		} else if (ob == returnButton) {
 			setVisible(false);
 		}
-	}
-
-	public static void main(String[] args) {
-		new BookInfoView("책 정보");
 	}
 
 }
