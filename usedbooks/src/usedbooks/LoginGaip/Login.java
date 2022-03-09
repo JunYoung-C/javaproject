@@ -71,12 +71,10 @@ public class Login extends JFrame implements ActionListener {
 		
 		textId = new JTextField();
 		textId.setBounds(170, 130, 300, 30);
-		textId.setForeground(Color.green);
 		this.add(textId);
 
 		textPassword = new JTextField();
 		textPassword.setBounds(170, 175, 300, 30);
-		textPassword.setForeground(Color.green);
 		this.add(textPassword);
 
 		titleLabel = new JLabel("온라인 중고책 서점", JLabel.CENTER);
@@ -89,13 +87,11 @@ public class Login extends JFrame implements ActionListener {
 		labelId = new JLabel("ID", JLabel.LEFT);
 		labelId.setBounds(140, 130, 70, 30);
 		labelId.setFont(f_bigText);
-		// labelId.setFont(new Font("맑은 고딕",Font.PLAIN, 12));
 		this.add(labelId);
 
 		labelPassword = new JLabel("PW", JLabel.LEFT);
 		labelPassword.setBounds(130, 175, 70, 30);
 		labelPassword.setFont(f_bigText);
-		// labelPassword.setFont(new Font("맑은 고딕",Font.PLAIN, 12));
 		this.add(labelPassword);
 
 		// 로그인 버튼
